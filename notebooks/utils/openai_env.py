@@ -7,3 +7,5 @@ def print_env():
     print(f'openai.api_base: {openai.api_base}')
     print(f'openai.api_type: {openai.api_type}')
     print(f'openai.api_version: {openai.api_version}')
+
+
