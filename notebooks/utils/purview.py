@@ -1,24 +1,29 @@
-# python logger 
+# python logger
+# import logger and set level to Debug
+# import logger and set logging level to debug and format
 import logging
+
 logger = logging.getLogger(__name__)
+
+logger.info('start')
 
 
 def azure_auth(clientid, clientsecret, tokenurl):
+    logger.debug('azure_auth')
     import urllib.request
     import json
     headers = {
-        'Content-Type': 'application/x-www-form-urlencoded'} 
+        'Content-Type': 'application/x-www-form-urlencoded'}
 
     payload = {
-        'grant_type': 'client_credentials', 
+        'grant_type': 'client_credentials',
         'client_id': clientid,
         'client_secret': clientsecret,
         # 'scope': 'https://management.azure.com/.default'
         'scope': 'https://purview.azure.net/.default'
-        }
+    }
 
-
-    req = urllib.request.Request(url=tokenurl, data=urllib.parse.urlencode(payload).encode('utf-8'), headers=headers) 
+    req = urllib.request.Request(url=tokenurl, data=urllib.parse.urlencode(payload).encode('utf-8'), headers=headers)
     req.method = 'GET'
     response = urllib.request.urlopen(req)
     res = response.read()
@@ -28,13 +33,13 @@ def azure_auth(clientid, clientsecret, tokenurl):
 
 
 def search_catalog(
-        keywords='Purchase History', 
-        offset=0, 
-        limit=100, 
-        filter={}, 
+        keywords='Purchase History',
+        offset=0,
+        limit=100,
+        filter={},
         access_token=None,
-        purview_url=None): 
-    
+        purview_url=None):
+
     import urllib.request
     import json
 
@@ -56,7 +61,7 @@ def search_catalog(
 
     res_json = None
 
-    try: 
+    try:
         res = urllib.request.urlopen(req)
         # pprint(res.read().decode('utf-8'))
 
@@ -69,10 +74,10 @@ def search_catalog(
     return res_json
 
 
-def get_asset_byguid(itemid=None,         
+def get_asset_byguid(itemid=None,
         access_token=None,
-        purviewendpoint=None): 
-    
+        purviewendpoint=None):
+
     import urllib.request
     import json
 
@@ -84,8 +89,8 @@ def get_asset_byguid(itemid=None,
 
 
     req = urllib.request.Request(
-        url=f"{purviewendpoint}/catalog/api/atlas/v2/entity/guid/{itemid}", 
-        data=None, 
+        url=f"{purviewendpoint}/catalog/api/atlas/v2/entity/guid/{itemid}",
+        data=None,
         headers=headers)
     req.method = 'GET'
 
@@ -93,7 +98,7 @@ def get_asset_byguid(itemid=None,
 
     res_json = None
 
-    try: 
+    try:
         res = urllib.request.urlopen(req)
         # pprint(res.read().decode('utf-8'))
 
